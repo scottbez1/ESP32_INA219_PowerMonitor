@@ -7,6 +7,23 @@ TFT_eSprite spr = TFT_eSprite(&tft);
 
 Adafruit_INA219 ina219;
 
+/**
+ * Pinout:
+ *  LCD
+ *    GND=GND
+ *    VCC=3.3V
+ *    CLK=18
+ *    MOSI=19
+ *    RES=23
+ *    DC=16
+ *    BLK=4
+ *  INA219
+ *    VCC=3.3V
+ *    GND=GND
+ *    SCL=22 (+external I2C pull-up)
+ *    SDA=21 (+external I2C pull-up)
+ */
+
 void setup() {
   tft.begin();
   tft.invertDisplay(1);
@@ -54,7 +71,7 @@ void loop() {
   unsigned long timeMicros = micros();
 
   float power_mW = ina219.getPower_mW();
-  
+
   if (lastMeaurementTimeMicros > 0) {
     unsigned long deltaMicros = (timeMicros - lastMeaurementTimeMicros);
     energy_mW_us += power_mW * deltaMicros;
